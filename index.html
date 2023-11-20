@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exmplos Bootstrap e Javascript ES6</title>
+
+  <style>
+    body {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+  </style>
+
+  <link rel="stylesheet" href="bootstrap.min.css">
+
+  <script src="Controles.js"></script>
+  <script src="NpjurLoading.js"></script>
+
+</head>
+
+<body>
+
+  <npjur-loading id="npjloading" visible="true" tamanho=2></npjur-loading>
+
+  <div id="contentScroll" style="overflow: auto; height: 100vh; padding: 13px;">
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Controles de Cadastro</legend>
+      <controles-teste></controles-teste>
+
+      <div style="display: flex; padding: 13px;">
+        <label for="codigo" style="margin-right: 7px; margin-top: 4px;">Código:</label>
+        <input type="text" placeholder="Ao entrar aqui o botão GRAVAR será desativado e reativado ao sair deste."
+          class="form-control" id="codigo" onfocus="hideButton('gravar');" onblur="showButton('gravar');">
+      </div>
+    </fieldset>
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Tabela</legend>
+      <div id="divTable" style="overflow: auto; height: 200px; padding: 13px;">
+        <table class="table table-bordered">
+          <tr class="table-light">
+            <td colspan="3" class="text-center fw-bold">CARDINAIS</td>
+            <td colspan="2" class="text-center fw-bold">ORDINAIS</td>
+          </tr>
+          <tr>
+            <td>Arábicos</td>
+            <td>Romanos</td>
+            <td>Por Extenso</td>
+            <td>Símbolo</td>
+            <td>Por Extenso</td>
+          </tr>
+          <tr>
+            <td class="text-center">0</td>
+            <td class="text-center"></td>
+            <td>zero</td>
+            <td class="text-center"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="text-center">1</td>
+            <td class="text-center">I</td>
+            <td>um</td>
+            <td class="text-center">1º</td>
+            <td>primeiro</td>
+          </tr>
+          <tr>
+            <td class="text-center">2</td>
+            <td class="text-center">II</td>
+            <td>dois</td>
+            <td class="text-center">2º</td>
+            <td>segundo</td>
+          </tr>
+          <tr>
+            <td class="text-center">3</td>
+            <td class="text-center">III</td>
+            <td>três</td>
+            <td class="text-center">3º</td>
+            <td>terceiro</td>
+          </tr>
+          <tr>
+            <td class="text-center">4</td>
+            <td class="text-center">IV</td>
+            <td>quatro</td>
+            <td class="text-center">4º</td>
+            <td>quarto</td>
+          </tr>
+          <tr>
+            <td class="text-center">5</td>
+            <td class="text-center">V</td>
+            <td>cinco</td>
+            <td class="text-center">5º</td>
+            <td>quinto</td>
+          </tr>
+        </table>
+      </div>
+    </fieldset>
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Radio Buttons</legend>
+      <div class="btn-group" style="padding: 13px;">
+        <input type="radio" class="btn-check" name="options-outlined" id="OPT1" autocomplete="off">
+        <label class="btn btn-outline-success" for="OPT1">OPÇÃO 1</label>
+        <input type="radio" class="btn-check" name="options-outlined" id="OPT2" autocomplete="off">
+        <label class="btn btn-outline-success" for="OPT2">OPÇÃO 2</label>
+        <input type="radio" class="btn-check" name="options-outlined" id="OPT3" autocomplete="off">
+        <label class="btn btn-outline-success" for="OPT3">OPÇÃO 3</label>
+        <input type="radio" class="btn-check" name="options-outlined" id="OPT4" autocomplete="off">
+        <label class="btn btn-outline-success" for="OPT4">OPÇÃO 4</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Checkbox</legend>
+      <div style="padding: 13px;">
+        <input class="btn-check" type="checkbox" autocomplete="off" id="item1">
+        <label class="btn btn-outline-primary" for="item1">Item 1</label>
+        <input class="btn-check" type="checkbox" autocomplete="off" id="item2">
+        <label class="btn btn-outline-secondary" for="item2">Item 2</label>
+        <input class="btn-check" type="checkbox" autocomplete="off" id="item3">
+        <label class="btn btn-outline-danger" for="item3">Item 3</label>
+        <input class="btn-check" type="checkbox" autocomplete="off" id="item4">
+        <label class="btn btn-outline-warning" for="item4">Item 4</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Seleção Única</legend>
+      <div style="padding: 13px;">
+
+        <div class="form-check form-switch">
+          <input checked class="form-check-input" type="checkbox" role="switch" id="switchSingleSelect"
+            onchange="toggleEnable(this, 'singleSelect');">
+          <label class="form-check-label" for="switchSingleSelect">Ativar/Desativar</label>
+        </div>
+
+        <select class="form-select" id="singleSelect">
+          <option selected disabled>Abra para selecionar um item</option>
+          <option value="1">Um</option>
+          <option value="2">Dois</option>
+          <option value="3">Três</option>
+          <option value="4">Quatro</option>
+          <option value="5">Cinco</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset class="border rounded border-secondary p-3">
+      <legend class="float-none w-auto text-secondary h5">Múltipla Selecão</legend>
+      <div style="padding: 13px;">
+
+        <div class="form-check form-switch">
+          <input checked class="form-check-input" type="checkbox" role="switch" id="switchMultipleSelect"
+            onchange="toggleEnable(this, 'multipleSelect');">
+          <label class="form-check-label" for="switchMultipleSelect">Ativar/Desativar</label>
+        </div>
+
+        <select class="form-select" multiple id="multipleSelect">
+          <option value="0" disabled>Utilize as teclas Ctrl ou Shift para mais de uma opção</option>
+          <option value="1">Um</option>
+          <option value="2">Dois</option>
+          <option value="3">Três</option>
+          <option value="4">Quatro</option>
+          <option value="5">Cinco</option>
+        </select>
+      </div>
+    </fieldset>
+
+  </div>
+
+  <script>
+
+    document.body.scrollTo(0, 0);
+
+    setTimeout(() => {
+      const loading = document.querySelector('#npjloading');
+      loading.setAttribute('visible', false);
+    }, 5000);
+
+    const hideButton = (idButton) => {
+      const btn = document.querySelector(`#${idButton}`);
+      if (btn)
+        btn.style.visibility = 'hidden';
+    }
+
+    const showButton = (idButton) => {
+      const btn = document.querySelector(`#${idButton}`);
+      if (btn)
+        btn.style.visibility = 'visible';
+    }
+
+    const toggleEnable = (invoker, targetId) => {
+      const target = document.querySelector(`#${targetId}`);
+      console.log(target);
+      if (target) {
+        if (invoker.checked) {
+          target.removeAttribute('disabled');
+        } else {
+          target.setAttribute('disabled', 'disabled');
+        }
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
