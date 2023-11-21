@@ -1,27 +1,36 @@
 class NpjurLoading extends HTMLElement {
 
+  #container
+
   #zoom;
+  #tipo;
 
   constructor() {
 
     super();
 
     this.#zoom = 1;
+    this.#tipo = 'npjur-loader-full';
 
   }
 
   connectedCallback() {
 
-    if (this.hasAttribute('tamanho')) {
-      const valor = Number.parseFloat(this.getAttribute('tamanho'));
+    this.tabIndex = 0;
+    this.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab')
+        e.preventDefault();
+    });
 
-      if (!isNaN(valor))
-        this.#zoom = valor
-    }
+    this.#container = document.createElement('div');
+    this.#container.className = `npjur-loader ${this.#tipo}`;
+    this.#container.style = `transform: scale(${this.#zoom});`;
 
-    const container = document.createElement('div');
-    container.className = 'npjur-loader';
-    container.style = `transform: scale(${this.#zoom});`;
+    if (this.hasAttribute('zoom'))
+      this.#defineZoom(Number.parseFloat(this.getAttribute('zoom')));
+
+    if (this.hasAttribute('tipo'))
+      this.#defineTipo(this.getAttribute('tipo'));
 
     const loader = document.createElement('div');
     loader.className = 'loader';
@@ -47,35 +56,69 @@ class NpjurLoading extends HTMLElement {
     text2.innerText = 'JUR';
     textContainer1.append(text1, text2);
 
-    /*
-    const textContainer2 = document.createElement('div');
-    const text3 = document.createElement('span');
-    text3.className = 'text3';
-    text3.innerText = 'aguarde...';
-    textContainer2.append(text3);
-    */
-
     loader.append(one, two, three, four);
     textContainer.append(textContainer1);
 
-    container.append(loader, textContainer);
-    this.append(this.#style(), container);
+    this.#container.append(loader, textContainer);
+    this.append(this.#style(), this.#container);
 
   }
 
   static get observedAttributes() {
-    return ['visible'];
+    return ['visible', 'zoom', 'tipo'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
 
-    if (name === 'visible') {
-      if (newValue === 'true') {
-        this.classList.remove('hide');
-      } else {
-        this.classList.add('hide');
-      }
+    switch (name) {
+      case 'visible':
+        if (newValue === 'true') {
+          this.classList.remove('hide');
+        } else {
+          this.classList.add('hide');
+        }
+        break
+      case 'zoom':
+        this.#defineZoom(newValue)
+        break
+      case 'tipo':
+        this.#defineTipo(newValue)
+        break
     }
+
+  }
+
+  #defineZoom(valor) {
+
+    if (!isNaN(valor))
+      this.#zoom = valor
+
+    this.#container.style = `transform: scale(${this.#zoom});`;
+    if (this.#tipo === 'npjur-loader-fit') {
+      this.#container.style.width = `calc(95vw/${this.#zoom})`;
+    } else {
+      this.#container.style.width = '';
+    }
+  }
+
+  #defineTipo(valor) {
+
+    switch (valor) {
+      case 'faixa':
+        this.#tipo = 'npjur-loader-fit';
+        this.#container.style.width = `calc(95vw/${this.#zoom})`;
+        break;
+      case 'circulo':
+        this.#tipo = 'npjur-loader-circle';
+        this.#container.style.width = '';
+        break;
+      default:
+        this.#tipo = 'npjur-loader-full';
+        this.#container.style.width = '';
+        break;
+    }
+
+    this.#container.className = `npjur-loader ${this.#tipo}`;
 
   }
 
@@ -87,18 +130,39 @@ class NpjurLoading extends HTMLElement {
         position: absolute;
         top: 0;
         left: 0;
-        display: flex ;
+        display: flex;
+        align-items: center;
         justify-content: center;
         width: 100vw;
         height: 100vh;
         z-index: 10000;
         user-select: none;
-        background-color: black;
+      }
+      
+      .npjur-loader-full {
+        height: 100vh;
+        width: 100vw;
+      }
+
+      .npjur-loader-fit {
+        height: fit-content;
+        width: calc(95vw/${this.#zoom});
+        padding: 10px;
+        border-radius: 90px;
+      }
+
+      .npjur-loader-circle {
+        height: fit-content;
+        width: fit-content;
+        padding: 50px 20px 50px 20px;
+        border-radius: 360px;
       }
 
       .npjur-loader {
         display: flex;
+        justify-content: center;
         align-items: center;
+        background-color: black;
       }
       
       .hide{
@@ -118,10 +182,6 @@ class NpjurLoading extends HTMLElement {
       .npjur-loader .text2 {
         font-size: 1em;
         margin-left: -3px;
-      }
-
-      .npjur-loader .text3 {
-        font-size: 1em;
       }
 
       .npjur-loader .animate-charcter {
